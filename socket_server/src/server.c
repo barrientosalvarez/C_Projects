@@ -54,5 +54,6 @@ int main(int argc, char **arvg)
         return -1;
     }
 
-
+    char *hello="Hello World!\n";
+    ssize_t sent = send(cfd, (void *)hello, strlen(hello), 0);
 }
