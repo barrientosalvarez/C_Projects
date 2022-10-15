@@ -21,6 +21,9 @@ int main(int argc, char **arvg)
 
     socklen_t server_info_len=sizeof(server_info);
 
+    struct sockaddr client_info={0};
+    socklen_t client_info_len=sizeof(client_info);
+
     //creating our socket
     int sfd=socket(AF_INET, SOCK_STREAM, 0);
     if(0>sfd)
@@ -28,5 +31,28 @@ int main(int argc, char **arvg)
         perror("socket");
         return -1;
     }
+
+    //bind
+    if(0>bind(sfd, (struct sockaddr*)&server_info, server_info_len))
+    {
+        perror("bind");
+        return -1;
+    }
+
+    //listen
+    if(0>listen(sfd, 0))
+    {
+        perror("listen");
+        return -1;
+    }
+
+    //accept
+    int cfd=accept(sfd, &client_info, &client_info_len);
+    if(0>cfd)
+    {
+        perror("accept");
+        return -1;
+    }
+
 
 }
